@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Doctors | {{ hospital_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 8px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+      padding: 18px 12px 24px 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .header h2 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .header h2 i {
+      color: #667eea;
+      font-size: 1.2rem;
+    }
+
+    .header p {
+      color: #7f8c8d;
+      font-size: 0.95rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 36px 8px 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .search-box i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7f8c8d;
+      font-size: 1rem;
+    }
+
+    .filter-select {
+      padding: 8px 12px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 10px 8px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 8px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #2c3e50;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .stat-item i {
+      color: #667eea;
+      font-size: 1rem;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 10px 8px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+    }
+
+    td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #f1f3f5;
+      font-size: 0.9rem;
+      color: #2c3e50;
+      transition: background-color 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8f9ff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .doctor-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .doctor-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .doctor-details h4 {
+      margin: 0;
+      color: #2c3e50;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .doctor-details p {
+      margin: 2px 0 0 0;
+      color: #7f8c8d;
+      font-size: 0.8rem;
+    }
+
+    .specialization-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .reset-btn {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .reset-btn:hover {
+      background-color: #e0a800;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #c82333;
+    }
+
+    .edit-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #218838;
+    }
+
+    .flash {
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 0.95rem;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .flash.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .flash.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: rgba(102, 126, 234, 0.08);
+      font-size: 0.95rem;
+    }
+
+    .back-link:hover {
+      background: rgba(102, 126, 234, 0.2);
+      transform: translateX(-5px);
+    }
+
+    .back-link i {
+      margin-right: 8px;
+      font-size: 1rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px 10px;
+      color: #7f8c8d;
+    }
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #bdc3c7;
+    }
+    .empty-state h3 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: #2c3e50;
+    }
+    .empty-state p {
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+    }
+    .add-doctor-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 18px;
+      border-radius: 10px;
+      width: 320px;
+      max-width: 95%;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.13);
+      animation: modalSlide 0.3s ease-out;
+    }
+
+    .modal h3 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .modal-btn {
+      padding: 7px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes modalSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 8px;
+        margin: 8px auto;
+      }
+      .header h2 {
+        font-size: 1.1rem;
+      }
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-box {
+        min-width: auto;
+      }
+      .stats-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .table-container {
+        overflow-x: auto;
+      }
+      table {
+        min-width: 400px;
+      }
+      .action-buttons {
+        flex-direction: column;
+        gap: 2px;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2><i class="fas fa-users-cog"></i> Manage Doctors</h2>
+      <p>View and manage all registered doctors in your hospital</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search doctors by name, phone, or specialization...">
+        <i class="fas fa-search"></i>
+      </div>
+      <select class="filter-select" id="specializationFilter">
+        <option value="">All Specializations</option>
+        <!-- Options will be populated by JavaScript -->
+      </select>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <i class="fas fa-users"></i>
+        <span>Total Doctors: <strong id="totalDoctors">{{ doctors|length }}</strong></span>
+      </div>
+      <div class="stat-item">
+        <i class="fas fa-stethoscope"></i>
+        <span>Specializations: <strong id="totalSpecializations">0</strong></span>
+      </div>
+      <div class="stat-item">
+        <i class="fas fa-eye"></i>
+        <span>Showing: <strong id="showingCount">{{ doctors|length }}</strong></span>
+      </div>
+    </div>
+
+    <div class="table-container">
+      {% if doctors %}
+        <table id="doctorsTable">
+          <thead>
+            <tr>
+              <th><i class="fas fa-user"></i>Doctor</th>
+              <th><i class="fas fa-phone"></i>Phone</th>
+              <th><i class="fas fa-stethoscope"></i>Specialization</th>
+              <th><i class="fas fa-cogs"></i>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for doctor in doctors %}
+            <tr class="doctor-row" data-specialization="{{ doctor.specialization }}">
+              <td>
+                <div class="doctor-info">
+                  <div class="doctor-avatar">
+                    {{ doctor.name[0].upper() }}
+                  </div>
+                  <div class="doctor-details">
+                    <h4>{{ doctor.name }}</h4>
+                    <p>ID: #{{ doctor.id }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <i class="fas fa-phone" style="color: #667eea; margin-right: 8px;"></i>
+                {{ doctor.phone }}
+              </td>
+              <td>
+                <span class="specialization-badge">{{ doctor.specialization }}</span>
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <a class="btn edit-btn" href="/admin/edit-doctor/{{ doctor.id }}" title="Edit Doctor">
+                    <i class="fas fa-edit"></i>
+                    Edit
+                  </a>
+                  <a class="btn reset-btn" href="/admin/reset-password/{{ doctor.id }}" title="Reset Password">
+                    <i class="fas fa-key"></i>
+                    Reset
+                  </a>
+                  <button class="btn delete-btn" onclick="confirmDelete('{{ doctor.name }}', '{{ doctor.id }}')" title="Delete Doctor">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div class="empty-state">
+          <i class="fas fa-user-md"></i>
+          <h3>No Doctors Found</h3>
+          <p>You haven't added any doctors yet. Start by adding your first doctor to the system.</p>
+          <a href="/admin/add-doctor" class="add-doctor-btn">
+            <i class="fas fa-plus"></i>
+            Add First Doctor
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+    <a class="back-link" href="/admin/dashboard">
+      <i class="fas fa-arrow-left"></i>
+      Back to Dashboard
+    </a>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <h3><i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i> Confirm Delete</h3>
+      <p id="deleteMessage"></p>
+      <div class="modal-buttons">
+        <button class="modal-btn cancel" onclick="closeModal()">Cancel</button>
+        <button class="modal-btn confirm" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const specializationFilter = document.getElementById('specializationFilter');
+    const doctorRows = document.querySelectorAll('.doctor-row');
+    const showingCount = document.getElementById('showingCount');
+
+    // Populate specialization filter
+    const specializations = [...new Set(Array.from(doctorRows).map(row => 
+      row.dataset.specialization
+    ))];
+    specializations.forEach(spec => {
+      const option = document.createElement('option');
+      option.value = spec;
+      option.textContent = spec;
+      specializationFilter.appendChild(option);
+    });
+
+    // Update total specializations count
+    document.getElementById('totalSpecializations').textContent = specializations.length;
+
+    function filterDoctors() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const selectedSpecialization = specializationFilter.value;
+      let visibleCount = 0;
+
+      doctorRows.forEach(row => {
+        const doctorName = row.querySelector('.doctor-details h4').textContent.toLowerCase();
+        const doctorPhone = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+        const doctorSpecialization = row.dataset.specialization;
+
+        const matchesSearch = doctorName.includes(searchTerm) || 
+                             doctorPhone.includes(searchTerm) || 
+                             doctorSpecialization.toLowerCase().includes(searchTerm);
+        
+        const matchesSpecialization = !selectedSpecialization || 
+                                     doctorSpecialization === selectedSpecialization;
+
+        if (matchesSearch && matchesSpecialization) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      showingCount.textContent = visibleCount;
+    }
+
+    searchInput.addEventListener('input', filterDoctors);
+    specializationFilter.addEventListener('change', filterDoctors);
+
+    // Delete confirmation modal
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteMessage = document.getElementById('deleteMessage');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+    function confirmDelete(doctorName, doctorId) {
+      deleteMessage.textContent = `Are you sure you want to delete Dr. ${doctorName}? This action cannot be undone.`;
+      confirmDeleteBtn.onclick = () => {
+        window.location.href = `/admin/delete-doctor/${doctorId}`;
+      };
+      deleteModal.style.display = 'block';
+    }
+
+    function closeModal() {
+      deleteModal.style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target === deleteModal) {
+        closeModal();
+      }
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+      if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    // Add smooth animations on load
+    window.addEventListener('load', function() {
+      const rows = document.querySelectorAll('.doctor-row');
+      rows.forEach((row, index) => {
+        row.style.animation = `slideIn 0.5s ease-out ${index * 0.1}s both`;
+      });
+    });
+
+    // Add ripple effect to buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+          position: absolute;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+          transform: scale(0);
+          animation: ripple 0.6s linear;
+          left: ${x}px;
+          top: ${y}px;
+          width: ${size}px;
+          height: ${size}px;
+          pointer-events: none;
+        `;
+        
+        this.style.position = 'relative';
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

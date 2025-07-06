@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Specialization | {{ hospital_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      gap: 30px;
+    }
+
+    .section {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h2 {
+      color: #2c3e50;
+      font-size: 1.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .header h2 i {
+      color: #667eea;
+      font-size: 1.5rem;
+    }
+
+    .header p {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .flash {
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 500;
+      animation: slideIn 0.5s ease-out;
+    }
+
+    .flash.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .flash.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .search-container {
+      margin-top: 15px;
+    }
+
+    .search-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid #e9ecef;
+      margin-bottom: 10px;
+    }
+
+    .list-all-btn {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .list-all-btn:hover {
+      background: rgba(102, 126, 234, 0.2);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 15px;
+    }
+
+    ul li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    ul li span {
+      font-weight: 500;
+      color: #2c3e50;
+    }
+
+    ul li a {
+      color: #e74c3c;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .link-button {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+    }
+
+    .back-link:hover {
+      background: rgba(102, 126, 234, 0.2);
+    }
+
+    .logout-link {
+      background: rgba(231, 76, 60, 0.1);
+      color: #e74c3c;
+    }
+
+    .logout-link:hover {
+      background: rgba(231, 76, 60, 0.2);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.querySelector('.search-input');
+      const listItems = document.querySelectorAll('ul li');
+      const listAllBtn = document.querySelector('.list-all-btn');
+
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        listItems.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+      });
+
+      listAllBtn.addEventListener('click', function() {
+        listItems.forEach(item => {
+          item.style.display = '';
+        });
+        searchInput.value = '';
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <div class="container">
+    <div class="section">
+      <div class="header">
+        <h2><i class="fas fa-stethoscope"></i> Add Specialization</h2>
+        <p>Add a new medical specialization to your hospital</p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+
+      <form method="POST">
+        <input type="text" name="specialization" placeholder="e.g., Cardiology, ENT, Eye...">
+        <input type="submit" value="Add Specialization">
+      </form>
+
+      <!-- BACK TO DASHBOARD -->
+      <a class="link-button back-link" href="{{ url_for('admin.admin_dashboard') }}">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+
+    <div class="section">
+      <div class="header">
+        <h2><i class="fas fa-search"></i> Manage Specializations</h2>
+        <p>Search and delete existing specializations</p>
+      </div>
+
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search specializations...">
+        <button class="list-all-btn">List All</button>
+      </div>
+
+      <div>
+        <h3>Existing Specializations</h3>
+        <ul>
+          {% for spec in specializations %}
+            <li>
+              <span>{{ spec.name }}</span>
+              <a href="?delete={{ spec.id }}" onclick="return confirm('Are you sure to delete {{ spec.name }}?')">
+                <i class="fas fa-trash"></i> Delete
+              </a>
+            </li>
+          {% endfor %}
+          {% if specializations|length == 0 %}
+            <li>No specializations added yet.</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout button -->
+  <a class="link-button logout-link" href="{{ url_for('admin.admin_logout') }}" style="position: fixed; bottom: 20px; right: 40px;">
+    <i class="fas fa-right-from-bracket"></i> Logout
+  </a>
+</body>
+</html>

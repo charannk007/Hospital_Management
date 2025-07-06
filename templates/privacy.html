@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Privacy Policy - {{ hospital_name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base */
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f8fb;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #007B9E;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d1f0ff;
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        #nav-toggle {
+            display: none;
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .content-section h2 {
+            font-size: 2.5rem;
+            color: #007B9E;
+            margin-bottom: 20px;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .content-section ul {
+            padding-left: 20px;
+        }
+
+        .content-section li {
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #007B9E;
+            color: white;
+            text-align: center;
+            padding: 30px 10px;
+            margin-top: 60px;
+        }
+
+        .footer .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        .footer .social-links {
+            margin-top: 20px;
+        }
+
+        .footer .social-links h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer .social-icons a {
+            color: white;
+            font-size: 1.8rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .footer .social-icons a:hover {
+            color: #d1f0ff;
+            transform: scale(1.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #007B9E;
+                padding: 20px;
+                text-align: center;
+            }
+
+            #nav-toggle:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .content-section h2 {
+                font-size: 2rem;
+            }
+
+            .footer .social-icons a {
+                font-size: 1.5rem;
+            }
+
+            .footer .social-links h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+            <a href="/" style="color: white; text-decoration: none;">{{ hospital_name }}</a>
+            </div>
+
+            <input type="checkbox" id="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/privacy">Privacy</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Privacy Policy Section -->
+    <section class="content-section">
+        <h2>Privacy Policy</h2>
+        <p>At {{ hospital_name }}, your privacy is important to us. This Privacy Policy outlines how we collect, use, and protect your personal information when you use our services.</p>
+        
+        <p>Information we collect may include:</p>
+        <ul>
+            <li>Personal details such as name, age, and contact information</li>
+            <li>Medical history, reports, and consultation details</li>
+            <li>Website usage analytics and cookies</li>
+        </ul>
+
+        <p>We use this information to provide healthcare services, improve patient care, and ensure safety and compliance with legal requirements. Your data is stored securely and only accessed by authorized staff.</p>
+
+        <p>By using our website or services, you consent to our Privacy Policy. We may update this policy from time to time, and changes will be reflected on this page.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© {{ year }} {{ hospital_name }}. All rights reserved.</p>
+            <p>Developed by Charan NK</p>
+            <div class="social-links">
+                <h2>Connect With Us</h2>
+                <div class="social-icons">
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com" target="_blank" aria-label="X"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navToggle = document.querySelector('#nav-toggle');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+        });
+    </script>
+
+</body>
+</html>

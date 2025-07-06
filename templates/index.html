@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ hospital_name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Add Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Base */
+        body {
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            background-color: #f4f8fb;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #007B9E;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d1f0ff;
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        #nav-toggle {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://www.transparenttextures.com/patterns/cubes.png'), linear-gradient(to right, #e3f2fd, #ffffff);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #007B9E;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Success Stories Section */
+        .success-stories {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .success-stories h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #007B9E;
+            margin-bottom: 40px;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .story-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-card h3 {
+            font-size: 1.5rem;
+            color: #007B9E;
+            margin-bottom: 10px;
+        }
+
+        .story-card p {
+            color: #555;
+        }
+
+        /* Additional Links */
+        .additional-links {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .additional-links h2 {
+            font-size: 2rem;
+            color: #007B9E;
+            margin-bottom: 20px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .link-item a {
+            display: block;
+            padding: 15px;
+            background-color: #007B9E;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .link-item a:hover {
+            background-color: #005f78;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #007B9E;
+            color: white;
+            text-align: center;
+            padding: 30px 10px;
+            margin-top: 60px;
+        }
+
+        .footer .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        .footer .social-links {
+            margin-top: 20px;
+        }
+
+        .footer .social-links h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer .social-icons a {
+            color: white;
+            font-size: 1.8rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .footer .social-icons a:hover {
+            color: #d1f0ff;
+            transform: scale(1.2);
+        }
+
+        .footer .social-icons a[aria-label] {
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #007B9E;
+                padding: 20px;
+                text-align: center;
+            }
+
+            #nav-toggle:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .success-stories h2 {
+                font-size: 2rem;
+            }
+
+            .additional-links h2 {
+                font-size: 1.8rem;
+            }
+
+            .footer .social-links h2 {
+                font-size: 1.3rem;
+            }
+
+            .footer .social-icons a {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+            <a href="/" style="color: white; text-decoration: none;">{{ hospital_name }}</a>
+            </div>
+            <input type="checkbox" id="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/privacy">Privacy</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to {{ hospital_name }}</h1>
+            <p>Your trusted partner in health and wellness.</p>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="success-stories">
+        <h2>Patient Success Stories</h2>
+        <div class="stories-grid">
+            <div class="story-card">
+                <h3>Krishna's Recovery Journey</h3>
+                <p>After a complex surgery, Krishna regained his strength with our dedicated care team's support.</p>
+            </div>
+            <div class="story-card">
+                <h3>Anjali's New Beginning</h3>
+                <p>Our rehabilitation program helped Anjali overcome challenges and return to her active lifestyle.</p>
+            </div>
+            <div class="story-card">
+                <h3>Vijay's Heart Health</h3>
+                <p>With our cardiology expertise, Vijay received timely treatment and is thriving.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Links -->
+   <section class="additional-links">
+    <h2>Explore More</h2>
+    <div class="links-grid">
+        <div class="link-item"><a href="/careers">Careers</a></div>
+        <div class="link-item"><a href="/networks">Our Networks</a></div>
+        <div class="link-item"><a href="/blog">Health Blog</a></div>
+        <div class="link-item"><a href="/events">Community Events</a></div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© {{ year }} {{ hospital_name }}. All rights reserved.</p>
+            <p>Developed by Charan NK</p>
+            <div class="social-links">
+                <h2>Connect With Us</h2>
+                <div class="social-icons">
+                    <a href="https://instagram.com" target="_blank" aria-label="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" aria-label="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com" target="_blank" aria-label="Follow us on X"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="Subscribe to our YouTube channel"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navToggle = document.querySelector('#nav-toggle');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
