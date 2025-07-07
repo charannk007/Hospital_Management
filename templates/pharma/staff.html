@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Pharmacy Staff | {{ hospital_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f6f8;
+      padding: 30px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    form {
+      margin-bottom: 30px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    table th {
+      background-color: #667eea;
+      color: white;
+    }
+    .actions a {
+      margin-right: 10px;
+      color: #e74c3c;
+      text-decoration: none;
+    }
+    .actions a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><i class="fas fa-user-plus"></i> Create Pharmacy Staff</h2>
+    <form method="POST" action="{{ url_for('pharma.manage_staff') }}">
+      <input type="text" name="name" placeholder="Staff Name" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="submit" value="Create Staff">
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <h3>Existing Staff</h3>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+      {% for staff in staff_list %}
+      <tr>
+        <td>{{ staff.id }}</td>
+        <td>{{ staff.name }}</td>
+        <td class="actions">
+          <a href="{{ url_for('pharma.delete_staff', staff_id=staff.id) }}"
+             onclick="return confirm('Delete {{ staff.name }}?')">
+             Delete
+          </a>
+          <a href="{{ url_for('pharma.reset_staff_password', staff_id=staff.id) }}"
+             onclick="return confirm('Reset password for {{ staff.name }}?')">
+             Reset Password
+          </a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">No staff accounts created yet.</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>

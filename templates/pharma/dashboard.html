@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | {{ hospital_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: #333;
+    }
+
+    .navbar {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 15px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .navbar h1 {
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #764ba2;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .flash {
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .flash.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .flash.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <h1>{{ hospital_name }} Admin Dashboard</h1>
+    <div class="nav-links">
+      <a href="{{ url_for('pharma.manage_staff') }}">Manage Staff</a>
+      <a href="{{ url_for('pharma.add_medicine') }}">Manage Medicines</a>
+      <a href="{{ url_for('pharma.pharma_sales') }}">Sales Report</a>
+      <a href="#" onclick="confirmLogout()">Logout</a>
+    </div>
+  </div>
+
+  <div class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <h2>Welcome, {{ hospital_name }}, {{ session['pharma_admin'] }}!</h2>
+    <p>Use the navigation bar to manage staff, medicines, and view reports.</p>
+
+    {% if low_stock_meds %}
+      <div style="background-color: #fff3cd; border-left: 5px solid #ffa500; padding: 15px; margin-top: 20px;">
+        <h3>⚠️ Low Stock Notification</h3>
+        <ul>
+          {% for med in low_stock_meds %}
+            <li><strong>{{ med.name }}</strong> - Only {{ med.quantity }} left in stock</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function confirmLogout() {
+      if (confirm("Are you sure you want to logout?")) {
+        window.location.href = "{{ url_for('pharma.pharma_logout') }}";
+      }
+    }
+  </script>
+</body>
+
+</html>
