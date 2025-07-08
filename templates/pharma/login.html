@@ -4,72 +4,467 @@
   <meta charset="UTF-8">
   <title>Pharmacy Admin Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(135deg, #1c92d2, #f2fcfe);
-      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
+      overflow: hidden;
     }
-    .login-box {
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+    /* Animated background elements */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      max-width: 400px;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
     }
-    .login-box h2 {
-      margin-bottom: 20px;
-      color: #2c3e50;
-      text-align: center;
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 2px solid #eee;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-    input[type="submit"] {
-      width: 100%;
-      background: #1c92d2;
+
+    .floating-pill {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 20s infinite linear;
+      font-size: 2rem;
       color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 1rem;
     }
-    .flash {
-      background: #f8d7da;
-      color: #721c24;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+      }
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 450px;
+      position: relative;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .login-container:hover {
+      transform: translateY(-5px);
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .login-container:hover::before {
+      left: 100%;
+    }
+
+    .header {
       text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+      50% { box-shadow: 0 10px 30px rgba(102, 126, 234, 0.8); }
+      100% { box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+    }
+
+    .logo i {
+      font-size: 2.5rem;
+      color: white;
+    }
+
+    .login-container h2 {
+      color: #2c3e50;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7f8c8d;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 18px 18px 18px 50px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: #f8f9fa;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: #667eea;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-input:focus + i {
+      color: #667eea;
+    }
+
+    .form-input::placeholder {
+      color: #adb5bd;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #7f8c8d;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    .password-toggle:hover {
+      color: #667eea;
+    }
+
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .flash {
+      background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: center;
+      animation: slideDown 0.5s ease;
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .remember-section {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6c757d;
+      cursor: pointer;
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #667eea;
+      cursor: pointer;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .footer-text {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .footer-link {
+      color: #667eea;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #764ba2;
+    }
+
+    /* Loading animation */
+    .loading {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    }
+    
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 40px 30px;
+        margin: 10px;
+      }
+      
+      .login-container h2 {
+        font-size: 1.8rem;
+      }
+      
+      .form-input {
+        padding: 16px 16px 16px 45px;
+      }
+      
+      .login-btn {
+        padding: 16px;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Pharmacy Admin Login</h2>
+  <div class="bg-animation">
+    <div class="floating-pill" style="left: 10%; animation-delay: 0s;">💊</div>
+    <div class="floating-pill" style="left: 20%; animation-delay: 2s;">🏥</div>
+    <div class="floating-pill" style="left: 30%; animation-delay: 4s;">💉</div>
+    <div class="floating-pill" style="left: 40%; animation-delay: 6s;">🩺</div>
+    <div class="floating-pill" style="left: 50%; animation-delay: 8s;">💊</div>
+    <div class="floating-pill" style="left: 60%; animation-delay: 10s;">🏥</div>
+    <div class="floating-pill" style="left: 70%; animation-delay: 12s;">💉</div>
+    <div class="floating-pill" style="left: 80%; animation-delay: 14s;">🩺</div>
+    <div class="floating-pill" style="left: 90%; animation-delay: 16s;">💊</div>
+  </div>
+
+  <div class="login-container">
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-pills"></i>
+      </div>
+      <h2>Pharmacy Admin</h2>
+      <div class="subtitle">Secure Healthcare Management</div>
+    </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% for category, message in messages %}
-        <div class="flash">{{ message }}</div>
+        <div class="flash">
+          <i class="fas fa-exclamation-triangle"></i>
+          {{ message }}
+        </div>
       {% endfor %}
     {% endwith %}
 
-    <form method="POST">
-      <input type="text" name="username" placeholder="Username" required>
-      <input type="password" name="password" placeholder="Password" required>
-      <input type="submit" value="Login">
+    <form method="POST" id="loginForm">
+      <div class="form-group">
+        <input type="text" name="username" class="form-input" placeholder="Username" required>
+        <i class="fas fa-user"></i>
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="password" class="form-input" placeholder="Password" required id="passwordInput">
+        <i class="fas fa-lock"></i>
+        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+      </div>
+
+      <div class="remember-section">
+        <label class="remember-me">
+          <input type="checkbox" name="remember">
+          Remember me
+        </label>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginBtn">
+        <span class="loading" id="loading"></span>
+        <span id="btnText">Sign In</span>
+      </button>
     </form>
-  </div>
+
+  <script>
+    // Password toggle functionality
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('passwordInput');
+    
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      this.classList.toggle('fa-eye');
+      this.classList.toggle('fa-eye-slash');
+    });
+
+    // Form submission with loading animation
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const loading = document.getElementById('loading');
+    const btnText = document.getElementById('btnText');
+
+    loginForm.addEventListener('submit', function(e) {
+      // Show loading animation
+      loading.style.display = 'inline-block';
+      btnText.textContent = 'Signing in...';
+      loginBtn.disabled = true;
+      
+      // Note: In a real implementation, you would handle the actual form submission here
+      // This is just for demo purposes - remove this timeout in production
+      setTimeout(() => {
+        loading.style.display = 'none';
+        btnText.textContent = 'Sign In';
+        loginBtn.disabled = false;
+      }, 2000);
+    });
+
+    // Input focus animations
+    const inputs = document.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.style.transform = 'translateY(-2px)';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Add ripple effect to login button
+    loginBtn.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple');
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  </script>
 </body>
 </html>
