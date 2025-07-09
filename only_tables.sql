@@ -32,16 +32,6 @@ CREATE TABLE `admin_users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `admin_users`
---
-
-LOCK TABLES `admin_users` WRITE;
-/*!40000 ALTER TABLE `admin_users` DISABLE KEYS */;
-INSERT INTO `admin_users` VALUES (1,'admin','240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9');
-/*!40000 ALTER TABLE `admin_users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `cashier_accounts`
 --
 
@@ -55,15 +45,6 @@ CREATE TABLE `cashier_accounts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `cashier_accounts`
---
-
-LOCK TABLES `cashier_accounts` WRITE;
-/*!40000 ALTER TABLE `cashier_accounts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cashier_accounts` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `doctors`
@@ -85,16 +66,6 @@ CREATE TABLE `doctors` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `doctors`
---
-
-LOCK TABLES `doctors` WRITE;
-/*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
-INSERT INTO `doctors` VALUES (4,'harika','1234567890','scrypt:32768:8:1$EbLtZUpvmfYIUj5k$7d4b48c5eb44e675a167e53befc8bb6983f83de5b92f01ee793177552fefc3d4417800b7fdb536a26db5eb579448ee5814c246d0a5fb21e2746c223a6b67b280',15),(5,'ram','1234567890','scrypt:32768:8:1$7TvcPOioZd3c7kBQ$4b725c0316b47942917ade1c71f8ee4b22c7a08338e05c0c3342b52460ca0f1108eba18777bd4625fdff49223c6e0169308ded6c668a88aa3467ce17a8d21c6a',NULL),(6,'Charan','1234567890','scrypt:32768:8:1$78ku3m6Qkq6dgqnC$2678b0bbb93e53a3f9c05abf3ab57c4ec4fbd4c330b70316d156fe9143005bb69c4bfe39faab91acd915fef4d6dd33fca00b9b67a9f6ae8a27a1257fd91650cc',18);
-/*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `laboratory_accounts`
 --
 
@@ -110,16 +81,6 @@ CREATE TABLE `laboratory_accounts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `laboratory_accounts`
---
-
-LOCK TABLES `laboratory_accounts` WRITE;
-/*!40000 ALTER TABLE `laboratory_accounts` DISABLE KEYS */;
-INSERT INTO `laboratory_accounts` VALUES (4,'fgfdgfdg','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
-/*!40000 ALTER TABLE `laboratory_accounts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `manager_admins`
 --
 
@@ -133,16 +94,6 @@ CREATE TABLE `manager_admins` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `manager_admins`
---
-
-LOCK TABLES `manager_admins` WRITE;
-/*!40000 ALTER TABLE `manager_admins` DISABLE KEYS */;
-INSERT INTO `manager_admins` VALUES (1,'manager','240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9');
-/*!40000 ALTER TABLE `manager_admins` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `pharma_admins`
@@ -161,16 +112,6 @@ CREATE TABLE `pharma_admins` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pharma_admins`
---
-
-LOCK TABLES `pharma_admins` WRITE;
-/*!40000 ALTER TABLE `pharma_admins` DISABLE KEYS */;
-INSERT INTO `pharma_admins` VALUES (1,'pharmaadmin','1c7d7f2a7668a1de0ea8f04a0ce6ff072e14781b052c51ee506a41b05d28b5cb');
-/*!40000 ALTER TABLE `pharma_admins` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pharma_audit_logs`
 --
 
@@ -185,16 +126,6 @@ CREATE TABLE `pharma_audit_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pharma_audit_logs`
---
-
-LOCK TABLES `pharma_audit_logs` WRITE;
-/*!40000 ALTER TABLE `pharma_audit_logs` DISABLE KEYS */;
-INSERT INTO `pharma_audit_logs` VALUES (1,'pharmaadmin','logout','2025-07-07 16:44:04'),(2,'pharmaadmin','logout','2025-07-08 03:20:21'),(3,'pharmaadmin','logout','2025-07-08 03:26:58'),(4,'pharmaadmin','logout','2025-07-08 16:20:37'),(5,'pharmaadmin','logout','2025-07-08 16:25:34'),(6,'pharmaadmin','logout','2025-07-08 17:17:04'),(7,'pharmaadmin','logout','2025-07-09 16:12:41'),(8,'pharmaadmin','logout','2025-07-09 17:39:17');
-/*!40000 ALTER TABLE `pharma_audit_logs` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `pharma_medicines`
@@ -215,16 +146,6 @@ CREATE TABLE `pharma_medicines` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pharma_medicines`
---
-
-LOCK TABLES `pharma_medicines` WRITE;
-/*!40000 ALTER TABLE `pharma_medicines` DISABLE KEYS */;
-INSERT INTO `pharma_medicines` VALUES (11,'dolo',0,'2025-07-31','2025-07-08 17:15:24',70.00),(12,'amox',100,'2025-07-31','2025-07-09 15:42:01',10.00);
-/*!40000 ALTER TABLE `pharma_medicines` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pharma_sales`
 --
 
@@ -243,16 +164,6 @@ CREATE TABLE `pharma_sales` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pharma_sales`
---
-
-LOCK TABLES `pharma_sales` WRITE;
-/*!40000 ALTER TABLE `pharma_sales` DISABLE KEYS */;
-INSERT INTO `pharma_sales` VALUES (1,'dolo',10,45.00,'pharmaadmin','2025-07-07'),(2,'dolo',1235,12.00,'pharmaadmin','2025-07-07'),(3,'dolo',10,10.00,'pharmaadmin','2025-07-07'),(4,'dolo',100,10.00,'pharmaadmin','2025-07-07'),(5,'dolo',1,1.00,'pharmaadmin','2025-07-07'),(6,'dolo',100,10.00,'pharmaadmin','2025-07-07'),(7,'syrup',5,100.00,'pharmaadmin','2025-07-07'),(8,'dolo',10,10.00,'pharmaadmin','2025-07-07'),(9,'dolo',900,30.00,'pharmaadmin','2025-07-08'),(10,'amoxyllin',1500,100.00,'pharmaadmin','2025-07-08'),(11,'dolo',10,45.00,'pharmaadmin','2025-07-08'),(12,'dolo',40,10.00,'pharmaadmin','2025-07-08');
-/*!40000 ALTER TABLE `pharma_sales` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `pharmacy_staff`
 --
 
@@ -267,15 +178,6 @@ CREATE TABLE `pharmacy_staff` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `pharmacy_staff`
---
-
-LOCK TABLES `pharmacy_staff` WRITE;
-/*!40000 ALTER TABLE `pharmacy_staff` DISABLE KEYS */;
-/*!40000 ALTER TABLE `pharmacy_staff` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `receptionists`
@@ -293,15 +195,6 @@ CREATE TABLE `receptionists` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `receptionists`
---
-
-LOCK TABLES `receptionists` WRITE;
-/*!40000 ALTER TABLE `receptionists` DISABLE KEYS */;
-/*!40000 ALTER TABLE `receptionists` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `service_prices`
 --
 
@@ -315,16 +208,6 @@ CREATE TABLE `service_prices` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `service_prices`
---
-
-LOCK TABLES `service_prices` WRITE;
-/*!40000 ALTER TABLE `service_prices` DISABLE KEYS */;
-INSERT INTO `service_prices` VALUES (1,'a',1000.00),(2,'x-ray',450.00);
-/*!40000 ALTER TABLE `service_prices` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `settings`
@@ -343,16 +226,6 @@ CREATE TABLE `settings` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `settings`
---
-
-LOCK TABLES `settings` WRITE;
-/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'hospital_name','Happy9');
-/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `specializations`
 --
 
@@ -366,16 +239,6 @@ CREATE TABLE `specializations` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `specializations`
---
-
-LOCK TABLES `specializations` WRITE;
-/*!40000 ALTER TABLE `specializations` DISABLE KEYS */;
-INSERT INTO `specializations` VALUES (15,'cardio'),(14,'ent'),(16,'eye'),(18,'hair'),(19,'lungs');
-/*!40000 ALTER TABLE `specializations` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -386,4 +249,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-09 23:22:25
+-- Dump completed on 2025-07-09 23:23:07
