@@ -2,11 +2,13 @@ from flask import Flask
 from routes.main_routes import main
 from routes.admin_routes import admin_bp
 from routes.pharma_routes import pharma_bp
+from routes.manager_routes import manager_bp
 
 app = Flask(__name__)
 app.register_blueprint(main)
 app.register_blueprint(admin_bp)
 app.register_blueprint(pharma_bp)
+app.register_blueprint(manager_bp)
 app.secret_key = '3e0f3c75113e4ee46b8a287b97b5def1'
 
 

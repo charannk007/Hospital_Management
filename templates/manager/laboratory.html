@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Laboratory Accounts | Happy9 Hospital</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #e6f0fa 0%, #f7f9fc 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    nav {
+      background: #1e3a8a;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: #2563eb;
+    }
+
+    nav a.active {
+      background: #2563eb;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    nav div {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      max-width: 900px;
+      margin: 2rem auto;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .flash-message {
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .flash-message.success {
+      color: #059669;
+      background: #d1fae5;
+    }
+
+    .flash-message.error {
+      color: #b91c1c;
+      background: #fee2e2;
+    }
+
+    form {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .search-bar {
+      margin-top: 1rem;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="search"] {
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 200px;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    button:hover {
+      background: #1e40af;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .actions a {
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      margin-right: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .actions a[href*="reset"] {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    .actions a[href*="reset"]:hover {
+      background: #059669;
+    }
+
+    .actions a[href*="delete"] {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    .actions a[href*="delete"]:hover {
+      background: #b91c1c;
+    }
+
+   
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      nav div {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      nav a {
+        width: 100%;
+        text-align: center;
+      }
+
+      .container {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      input[type="search"] {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+
+      table, th, td {
+        font-size: 0.9rem;
+      }
+
+      th, td {
+        padding: 0.75rem;
+      }
+
+      .actions a {
+        display: block;
+        margin: 0.5rem 0;
+        text-align: center;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div>
+      <a href="{{ url_for('manager.manager_dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('manager.manage_receptionist') }}">Receptionist</a>
+      <a href="{{ url_for('manager.manage_laboratory') }}" class="active">Laboratory</a>
+      <a href="{{ url_for('manager.manage_cashier') }}">Cashier</a>
+      <a href="{{ url_for('manager.fix_price') }}">Fix Price</a>
+    </div>
+    <div>
+      <a href="{{ url_for('manager.manager_logout') }}">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Manage Laboratory Accounts</h2>
+
+  
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <input type="text" name="name" placeholder="Lab Staff Name" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit"><i class="fas fa-plus"></i> Add Lab Staff</button>
+    </form>
+
+    <form method="GET" class="search-bar">
+      <input type="search" name="search" placeholder="Search Lab Staff" value="{{ request.args.get('search', '') }}">
+      <button type="submit"><i class="fas fa-search"></i> Search</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Lab Staff Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lab in laboratory_accounts %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ lab.name }}</td>
+            <td class="actions">
+              <a href="{{ url_for('manager.reset_lab_password', lab_id=lab.id) }}"><i class="fas fa-key"></i> Reset</a>
+              <a href="{{ url_for('manager.delete_lab_account', lab_id=lab.id) }}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i> Delete</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr><td colspan="3">No laboratory accounts found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
