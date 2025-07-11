@@ -150,7 +150,8 @@ def manage_patients():
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
     search_term = request.form.get('search', '').strip()
-    date_filter = request.form.get('date_filter', '').strip()
+    date_start = request.form.get('date_start', '').strip()
+    date_end = request.form.get('date_end', '').strip()
     page = int(request.args.get('page', 1))
     limit = 10
     offset = (page - 1) * limit
@@ -159,18 +160,34 @@ def manage_patients():
     query = "SELECT id, patient_id, name, gender, age, phone, address, created_at FROM patients WHERE 1=1"
     params = []
 
+    # Added patient_id to search
     if search_term:
-        query += " AND (name LIKE %s OR phone LIKE %s)"
+        query += " AND (name LIKE %s OR phone LIKE %s OR patient_id LIKE %s)"
         like_term = f"%{search_term}%"
-        params.extend([like_term, like_term])
+        params.extend([like_term, like_term, like_term])
 
-    if date_filter:
+    if date_start and date_end:
         try:
-            formatted_date = datetime.datetime.strptime(date_filter, "%Y-%m-%d").date()
-            query += " AND DATE(created_at) = %s"
-            params.append(formatted_date)
+            start_date = datetime.datetime.strptime(date_start, "%Y-%m-%d").date()
+            end_date = datetime.datetime.strptime(date_end, "%Y-%m-%d").date()
+            query += " AND DATE(created_at) BETWEEN %s AND %s"
+            params.extend([start_date, end_date])
         except ValueError:
-            flash("Invalid date format", "danger")
+            flash("Invalid date range format", "danger")
+    elif date_start:
+        try:
+            start_date = datetime.datetime.strptime(date_start, "%Y-%m-%d").date()
+            query += " AND DATE(created_at) >= %s"
+            params.append(start_date)
+        except ValueError:
+            flash("Invalid start date format", "danger")
+    elif date_end:
+        try:
+            end_date = datetime.datetime.strptime(date_end, "%Y-%m-%d").date()
+            query += " AND DATE(created_at) <= %s"
+            params.append(end_date)
+        except ValueError:
+            flash("Invalid end date format", "danger")
 
     query += " ORDER BY id DESC LIMIT %s OFFSET %s"
     params.extend([limit, offset])
@@ -192,7 +209,8 @@ def manage_patients():
                            page=page,
                            total_pages=total_pages,
                            search_term=search_term,
-                           date_filter=date_filter)
+                           date_start=date_start,
+                           date_end=date_end)
 
 
 # ---------------------- UPDATE PATIENT ---------------------- #

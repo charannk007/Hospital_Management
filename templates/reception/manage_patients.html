@@ -170,11 +170,23 @@
     <!-- Top Bar for Filter and Export -->
     <div class="top-bar">
       <!-- Filter Form -->
-      <form method="POST" class="filter-form">
-        <input type="text" name="search" placeholder="Search by name or phone..." value="{{ search_term }}">
-        <input type="date" name="date_filter" value="{{ date_filter }}">
-        <button type="submit">Search</button>
+      <form method="POST" class="filter-form" id="patientFilterForm">
+        <input type="text" name="search" placeholder="Search by name, phone, or patient ID..." value="{{ search_term }}">
+        <input type="date" name="date_start" value="{{ date_start }}" title="Start Date">
+        <span style="font-weight:600;">to</span>
+        <input type="date" name="date_end" value="{{ date_end }}" title="End Date">
       </form>
+      <script>
+        const form = document.getElementById('patientFilterForm');
+        form.querySelectorAll('input').forEach(input => {
+          input.addEventListener('change', function() {
+            form.submit();
+          });
+          input.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') form.submit();
+          });
+        });
+      </script>
 
       <!-- Export Buttons -->
       <div class="export-links">
@@ -186,6 +198,16 @@
         </form>
       </div>
     </div>
+
+    <!-- Search Info -->
+    {% if search_term or date_filter %}
+      <div style="margin-bottom: 10px; font-size: 1.05rem; color: #555;">
+        Showing results for
+        {% if search_term %}<strong>"{{ search_term }}"</strong>{% endif %}
+        {% if date_filter %}on <strong>{{ date_filter }}</strong>{% endif %}
+        — <strong>{{ patients|length }}</strong> found
+      </div>
+    {% endif %}
 
     <!-- Patient Table -->
     <table>
