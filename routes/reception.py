@@ -391,7 +391,3 @@ def export_patients_pdf():
     pdf_bytes = pdf.output(dest='S').encode('latin1')
     output = io.BytesIO(pdf_bytes)
     return send_file(output, download_name="patients.pdf", as_attachment=True)
-
-
-
-
