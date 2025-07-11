@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Patient</title>
+  <style>
+    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+    .container { background: white; padding: 25px; border-radius: 10px; width: 500px; margin: auto; }
+    label { display: block; margin-top: 10px; }
+    input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Edit Patient Info</h2>
+    <form method="POST">
+      <label>Name</label>
+      <input type="text" name="name" value="{{ patient.name }}" required>
+
+      <label>Gender</label>
+      <select name="gender" required>
+        <option value="Male" {% if patient.gender == 'Male' %}selected{% endif %}>Male</option>
+        <option value="Female" {% if patient.gender == 'Female' %}selected{% endif %}>Female</option>
+        <option value="Other" {% if patient.gender == 'Other' %}selected{% endif %}>Other</option>
+      </select>
+
+      <label>Age</label>
+      <input type="number" name="age" value="{{ patient.age }}" required>
+
+      <label>Phone</label>
+      <input type="text" name="phone" value="{{ patient.phone }}" required>
+
+      <label>Address</label>
+      <textarea name="address" required>{{ patient.address }}</textarea>
+
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>

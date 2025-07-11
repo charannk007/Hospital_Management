@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reception Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e8f0fe;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: inline-block;
+      margin: 10px 15px 10px 0;
+      padding: 14px 25px;
+      background: #2980b9;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #1f6391;
+    }
+    .logout-btn {
+      background: #c0392b;
+    }
+    .logout-btn:hover {
+      background: #962d22;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>{{ hospital_name }} - Reception Dashboard</h1>
+
+  <a href="/reception/new_patient" class="btn">New Patient</a>
+  <a href="/reception/existing_patient" class="btn">Existing Patient</a>
+  <a href="/reception/manage_patients" class="btn">Manage Patients</a>
+  <a href="/reception/logout" class="btn logout-btn">Logout</a>
+
+</body>
+</html>

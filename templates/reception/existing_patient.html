@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Existing Patient Lookup</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f2f2f2; }
+    .container { background: #fff; padding: 20px; border-radius: 10px; width: 600px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.2); }
+    label, input, button { display: block; width: 100%; margin-top: 15px; padding: 10px; }
+    .card-preview { border: 2px dashed #aaa; margin-top: 20px; padding: 20px; }
+    .barcode { font-family: 'Libre Barcode 128', cursive; font-size: 48px; margin: 10px 0; }
+    @media print { .no-print { display: none; } }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+128&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2>Reprint Patient Card</h2>
+    <form method="POST">
+      <label>Scan Barcode or Enter Patient ID</label>
+      <input type="text" name="barcode" placeholder="e.g. 96B64C48112C or happy9171569" required>
+      <button type="submit">Find Patient</button>
+    </form>
+
+
+    {% if patient %}
+    <div class="card-preview" id="pvc-card">
+      <h3>{{ hospital_name }}</h3>
+      <p><strong>Patient ID:</strong> {{ patient.patient_id }}</p>
+      <p><strong>Name:</strong> {{ patient.name }}</p>
+      <p><strong>Gender:</strong> {{ patient.gender }}</p>
+      <p><strong>Age:</strong> {{ patient.age }}</p>
+      <p><strong>Phone:</strong> {{ patient.phone }}</p>
+      <p><strong>Address:</strong> {{ patient.address }}</p>
+      <p><strong>Reg. Date:</strong> {{ patient.date }}</p>
+      <div class="barcode">{{ patient.barcode }}</div>
+      <p><strong>Good Luck</strong></p>
+    </div>
+    <button onclick="printCard()" class="no-print">🖨 Reprint PVC Card</button>
+    {% endif %}
+  </div>
+
+  <script>
+    function printCard() {
+      const original = document.body.innerHTML;
+      const card = document.getElementById('pvc-card').outerHTML;
+      document.body.innerHTML = card;
+      window.print();
+      document.body.innerHTML = original;
+    }
+  </script>
+</body>
+</html>

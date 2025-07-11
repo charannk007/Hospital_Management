@@ -145,6 +145,39 @@ INSERT INTO `manager_admins` VALUES (1,'manager','240be518fabd2724ddb6f04eeb1da5
 UNLOCK TABLES;
 
 --
+-- Table structure for table `patients`
+--
+
+DROP TABLE IF EXISTS `patients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `patients` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `age` int DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `address` text,
+  `barcode` varchar(255) DEFAULT NULL,
+  `registered_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `patient_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `patient_id` (`patient_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patients`
+--
+
+LOCK TABLES `patients` WRITE;
+/*!40000 ALTER TABLE `patients` DISABLE KEYS */;
+INSERT INTO `patients` VALUES (1,'charan','Male',26,'965421741','kuppam\r\n','632AA7DEAF8B','2025-07-10 22:46:00','2025-07-10 22:59:17',NULL),(2,'fdsfdf','Male',33,'1234567890','fdffef','77B805A358CC','2025-07-10 22:51:42','2025-07-10 22:59:17',NULL),(3,'qwerty','Female',22,'741852963','fsgdsgs','96B6AC48112C','2025-07-10 23:49:29','2025-07-10 23:49:29','happy9171569'),(4,'faefaef','Female',22,'2424224552','3r4343254325','195C439AE307','2025-07-10 23:53:59','2025-07-10 23:53:59','happy9171839'),(5,'cbn','Male',75,'7412365890','kuppam','190239EB98FE','2025-07-11 08:27:02','2025-07-11 08:27:02','happy843135');
+/*!40000 ALTER TABLE `patients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pharma_admins`
 --
 
@@ -289,7 +322,7 @@ CREATE TABLE `receptionists` (
   `name` varchar(100) DEFAULT NULL,
   `password_hash` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,6 +331,7 @@ CREATE TABLE `receptionists` (
 
 LOCK TABLES `receptionists` WRITE;
 /*!40000 ALTER TABLE `receptionists` DISABLE KEYS */;
+INSERT INTO `receptionists` VALUES (1,'charan','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
 /*!40000 ALTER TABLE `receptionists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -386,4 +420,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-07-09 23:22:25
+-- Dump completed on 2025-07-11  9:03:47
