@@ -20,6 +20,18 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/charannk007/Hospital_Management.git'
             }
         }
+        stage('SonarQube Code Analysis') {
+            steps {
+                withSonarQubeEnv('MySonar') {
+                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                        sh """
+                            sonar-scanner \
+                            -Dsonar.login=$SONAR_TOKEN
+                        """
+                    }
+                }
+            }
+        }
 
         stage('Deploy SQL to AWS RDS') {
             steps {
@@ -28,7 +40,7 @@ pipeline {
                     string(credentialsId: 'rds-endpoint', variable: 'DB_HOST')
                 ]) {
                     sh '''
-                        echo "🟡 Deploying SQL to AWS RDS..."
+                        echo "🟡 Deploying hospital_db_backup.sql to AWS RDS..."
                         mysql -h $DB_HOST -P $DB_PORT -u $MYSQL_USER -p"$MYSQL_PASS" $DB_NAME < $SQL_FILE
                     '''
                 }
@@ -72,13 +84,14 @@ pipeline {
 
     post {
         success {
-            echo '✅ Full pipeline completed successfully — app running on port 5000.'
+            echo '✅ Pipeline completed — App running on port 5000 and DB restored to AWS RDS.'
         }
         failure {
-            echo '❌ Pipeline failed. Check logs for errors.'
+            echo '❌ Pipeline failed — Check the logs for details.'
         }
     }
 }
+
 
 
 
