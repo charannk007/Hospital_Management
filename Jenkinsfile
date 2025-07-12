@@ -40,7 +40,7 @@ pipeline {
                 script {
                     echo 'Pushing image to Docker Hub...'
                     sh """
-                        docker push $IMAGE_NAME:latest
+                        docker push $IMAGE_NAME:v1
                     """
                 }
             }
