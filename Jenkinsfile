@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
         DB_PORT = '3306'
         DB_NAME = 'hospital_db'
