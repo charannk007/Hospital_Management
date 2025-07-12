@@ -20,26 +20,6 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/charannk007/Hospital_Management.git'
             }
         }
-        stage('SonarQube Code Analysis') {
-    steps {
-        withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-            sh '''
-                echo "🔍 Running SonarScanner inside Docker..."
-
-                docker run --rm \
-                    -v "$PWD":/usr/src \
-                    sonarsource/sonar-scanner-cli:latest \
-                    -Dsonar.projectKey=hospital-management \
-                    -Dsonar.projectName="Hospital Management" \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=http://13.235.67.23:9000 \
-                    -Dsonar.login=$SONAR_TOKEN
-            '''
-        }
-    }
-}
-
-
         stage('Deploy SQL to AWS RDS') {
             steps {
                 withCredentials([
