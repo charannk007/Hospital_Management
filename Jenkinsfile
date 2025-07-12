@@ -21,17 +21,24 @@ pipeline {
             }
         }
         stage('SonarQube Code Analysis') {
-            steps {
-                withSonarQubeEnv('MySonar') {
-                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-                        sh """
-                            sonar-scanner \
-                            -Dsonar.login=$SONAR_TOKEN
-                        """
-                    }
-                }
-            }
+    steps {
+        withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+            sh '''
+                echo "🔍 Running SonarScanner inside Docker..."
+
+                docker run --rm \
+                    -v "$PWD":/usr/src \
+                    sonarsource/sonar-scanner-cli:latest \
+                    -Dsonar.projectKey=hospital-management \
+                    -Dsonar.projectName="Hospital Management" \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://13.235.67.23:9000 \
+                    -Dsonar.login=$SONAR_TOKEN
+            '''
         }
+    }
+}
+
 
         stage('Deploy SQL to AWS RDS') {
             steps {
