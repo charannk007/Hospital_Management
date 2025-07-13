@@ -13,8 +13,6 @@ app.register_blueprint(manager_bp)
 app.register_blueprint(reception_bp)
 app.secret_key = '3e0f3c75113e4ee46b8a287b97b5def1'
 
-
-
 @app.after_request
 def add_no_cache_headers(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, private, max-age=0'
@@ -22,7 +20,10 @@ def add_no_cache_headers(response):
     response.headers['Expires'] = '0'
     return response
 
+# ✅ Add this for Kubernetes health check
+@app.route('/')
+def health_check():
+    return 'OK', 200
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
-
-
