@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hspmgmt-service
+  namespace: hospital
+spec:
+  type: ClusterIP
+  selector:
+    app: hspmgmt
+  ports:
+    - name: http
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
