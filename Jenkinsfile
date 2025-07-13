@@ -107,6 +107,8 @@ pipeline {
                             aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
                             
                             echo "📦 Deploying application to cluster..."
+                            kubectl apply -f hospital-namespace.yaml
+
                             kubectl apply -f deployment.yaml
                             kubectl apply -f service.yaml    
                         '''
