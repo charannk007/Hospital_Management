@@ -98,8 +98,8 @@ pipeline {
                             echo "Configuring kubectl for EKS cluster..."
                             aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
                             echo "Deploying application..."
-                            kubectl apply -f deployment.yml
-                            kubectl apply -f service.yml    
+                            kubectl apply -f deployment.yaml
+                            kubectl apply -f service.yaml    
                         '''
                     }
                 }
