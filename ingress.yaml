@@ -5,16 +5,17 @@ metadata:
   namespace: hospital
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-    - host: 15.207.14.219.nip.io
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: hspmgmt-service
-                port:
-                  number: 5000
+  - host: funnytask.cloud         
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hspmgmt-service
+            port:
+              number: 5000
