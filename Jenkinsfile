@@ -71,11 +71,7 @@ pipeline {
             when {
                 expression {
                     return sh(
-                        script: """
-                            aws eks describe-cluster \
-                              --region ${AWS_REGION} \
-                              --name ${EKS_CLUSTER_NAME} >/dev/null 2>&1
-                        """,
+                        script: "eksctl get cluster --name=${EKS_CLUSTER_NAME} --region=${AWS_REGION} >/dev/null 2>&1",
                         returnStatus: true
                     ) != 0
                 }
@@ -107,9 +103,10 @@ pipeline {
                     script {
                         echo '🚀 Deploying application to EKS...'
                         sh '''
-                            echo "Configuring kubectl for EKS cluster..."
+                            echo "🔧 Configuring kubectl for EKS cluster..."
                             aws eks update-kubeconfig --name ${EKS_CLUSTER_NAME} --region ${AWS_REGION}
-                            echo "Deploying application..."
+                            
+                            echo "📦 Deploying application to cluster..."
                             kubectl apply -f deployment.yaml
                             kubectl apply -f service.yaml    
                         '''
