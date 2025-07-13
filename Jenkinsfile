@@ -67,35 +67,35 @@ pipeline {
             }
         }
 
-        stage('Create EKS Cluster') {
-            when {
-                expression {
-                    return sh(
-                        script: "eksctl get cluster --name=${EKS_CLUSTER_NAME} --region=${AWS_REGION} >/dev/null 2>&1",
-                        returnStatus: true
-                    ) != 0
-                }
-            }
-            steps {
-                withAWS(credentials: 'aws-credentials-id', region: "${AWS_REGION}") {
-                    script {
-                        echo '🚀 Creating EKS cluster...'
-                        sh '''
-                            eksctl create cluster \
-                              --name ${EKS_CLUSTER_NAME} \
-                              --region ${AWS_REGION} \
-                              --nodegroup-name ${NODE_GROUP_NAME} \
-                              --node-type ${NODE_TYPE} \
-                              --nodes ${DESIRED_NODES} \
-                              --nodes-min ${MIN_NODES} \
-                              --nodes-max ${MAX_NODES} \
-                              --with-oidc \
-                              --managed
-                        '''
-                    }
-                }
-            }
-        }
+        // stage('Create EKS Cluster') {
+        //     when {
+        //         expression {
+        //             return sh(
+        //                 script: "eksctl get cluster --name=${EKS_CLUSTER_NAME} --region=${AWS_REGION} >/dev/null 2>&1",
+        //                 returnStatus: true
+        //             ) != 0
+        //         }
+        //     }
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials-id', region: "${AWS_REGION}") {
+        //             script {
+        //                 echo '🚀 Creating EKS cluster...'
+        //                 sh '''
+        //                     eksctl create cluster \
+        //                       --name ${EKS_CLUSTER_NAME} \
+        //                       --region ${AWS_REGION} \
+        //                       --nodegroup-name ${NODE_GROUP_NAME} \
+        //                       --node-type ${NODE_TYPE} \
+        //                       --nodes ${DESIRED_NODES} \
+        //                       --nodes-min ${MIN_NODES} \
+        //                       --nodes-max ${MAX_NODES} \
+        //                       --with-oidc \
+        //                       --managed
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Deploy to EKS Cluster') {
             steps {
