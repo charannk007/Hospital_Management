@@ -5,9 +5,9 @@ metadata:
   namespace: hospital
 spec:
   selector:
-    app: hspmgmt  # match labels from deployment
+    app: hspmgmt  # this must match the labels in your deployment
   ports:
     - protocol: TCP
       port: 5000
       targetPort: 5000
-  type: ClusterIP  # ✅ change from LoadBalancer to ClusterIP
+  type: ClusterIP
