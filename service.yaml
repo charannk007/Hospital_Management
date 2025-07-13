@@ -1,14 +1,14 @@
+# hspmgmt-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: hspmgmt-service
   namespace: hospital
 spec:
-  type: ClusterIP
   selector:
     app: hspmgmt
   ports:
-    - name: http
-      protocol: TCP
-      port: 5000
+    - protocol: TCP
+      port: 80
       targetPort: 5000
+  type: LoadBalancer
