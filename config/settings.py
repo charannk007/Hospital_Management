@@ -15,7 +15,7 @@ def get_db_connection():
     return pymysql.connect(
         host='database-1.czccaimeyk2a.ap-south-1.rds.amazonaws.com',
         user='admin',
-        password='root1234',
+        password='admin1234',
         database='hospital_db',
         cursorclass=DictCursor
     )
