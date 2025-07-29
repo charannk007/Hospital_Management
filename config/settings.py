@@ -13,9 +13,9 @@ from pymysql.cursors import DictCursor
 
 def get_db_connection():
     return pymysql.connect(
-        host='database-1.czccaimeyk2a.ap-south-1.rds.amazonaws.com',
+        host='hospitaldb.czccaimeyk2a.ap-south-1.rds.amazonaws.com',
         user='admin',
-        password='admin1234',
+        password='admin12345678',
         database='hospital_db',
         cursorclass=DictCursor
     )
