@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Database Configuration
-        DB_PORT = '3306'
-        DB_NAME = 'hospital_db'
-        SQL_FILE = 'hospital_db_backup.sql'
-
         // Docker Configuration
         IMAGE_NAME = 'hospital_app_image'
         CONTAINER_NAME = 'hospital_app_container'
@@ -21,19 +16,18 @@ pipeline {
             }
         }
 
-       stage('Deploy SQL to AWS RDS') {
-    steps {
-        echo '🟡 Deploying hospital_db_backup.sql to AWS RDS...'
-        sh '''
-            mysql -h database-1.czccaimeyk2a.ap-south-1.rds.amazonaws.com \
-                  -P 3306 \
-                  -u admin \
-                  -p'admin1234' \
-                  hospital_db < hospital_db_backup.sql
-        '''
-    }
-}
-
+        stage('Deploy SQL to AWS RDS') {
+            steps {
+                echo '🟡 Deploying hospital_db_backup.sql to AWS RDS...'
+                sh '''
+                    mysql -h hospitaldb.czccaimeyk2a.ap-south-1.rds.amazonaws.com \
+                          -P 3306 \
+                          -u admin \
+                          -p"admin12345678" \
+                          hospital_db < hospital_db_backup.sql
+                '''
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
