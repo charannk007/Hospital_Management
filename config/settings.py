@@ -13,7 +13,7 @@ from pymysql.cursors import DictCursor
 
 def get_db_connection():
     return pymysql.connect(
-        host='hospital.czccaimeyk2a.ap-south-1.rds.amazonaws.com',
+        host='database-1.czccaimeyk2a.ap-south-1.rds.amazonaws.com',
         user='admin',
         password='root1234',
         database='hospital_db',
