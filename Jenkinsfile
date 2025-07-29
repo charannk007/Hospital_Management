@@ -23,16 +23,17 @@ pipeline {
 
        stage('Deploy SQL to AWS RDS') {
     steps {
-        script {
-            def DB_HOST = 'your-rds-endpoint.amazonaws.com'  // 🔁 Replace with actual RDS endpoint
-
-            sh """
-                echo "🟡 Deploying hospital_db_backup.sql to AWS RDS..."
-                mysql -h $DB_HOST -P 3306 -u admin -p'admin1234' hospital_db < hospital_db_backup.sql
-            """
-        }
+        echo '🟡 Deploying hospital_db_backup.sql to AWS RDS...'
+        sh '''
+            mysql -h database-1.czccaimeyk2a.ap-south-1.rds.amazonaws.com \
+                  -P 3306 \
+                  -u admin \
+                  -p'admin1234' \
+                  hospital_db < hospital_db_backup.sql
+        '''
     }
 }
+
 
         stage('Build Docker Image') {
             steps {
